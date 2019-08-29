@@ -7,7 +7,7 @@ const Notification = () => {
     borderWidth: 1
   }
   return (
-    <div style={style}>
+    <div style={ style }>
       render here notification...
     </div>
   )
