@@ -2,7 +2,7 @@ import React from 'react'
 
 const Anecdote = ({ anecdote, onClickHandler }) => {
     return (
-        <div key={ anecdote.id }>
+        <div>
             <div>
                 { anecdote.content }
             </div>

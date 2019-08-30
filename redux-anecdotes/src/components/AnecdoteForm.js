@@ -7,7 +7,6 @@ const AnecdoteForm = (props) => {
         const content = event.target.anecdote.value
 
         props.store.dispatch(createAnecdote(content))
-
         event.target.anecdote.value = ''
     }
 
