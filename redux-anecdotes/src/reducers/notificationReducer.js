@@ -8,12 +8,23 @@ const notificationReducer = (state = '', action) => {
     }
 }
 
-export const createMessage = (message) => {
-    return {
-        type: 'ALERT',
-        data: {
-            content: message
-        }
+export const createMessage = (message, time) => {
+    return async dispatch => {
+        dispatch({
+            type: 'ALERT',
+            data: {
+                content: message
+            }
+        })
+
+        setTimeout(() => {
+            dispatch({
+                type: 'ALERT',
+                data: {
+                    content: ''
+                }
+            })
+        }, time)
     }
 }
 

@@ -7,12 +7,11 @@ import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 
 import { initializeAnecdotes } from './reducers/anecdoteReducer'
-import anecdoteService from './services/anecdote'
+
 
 const App = (props) => {
     useEffect(() => {
-        anecdoteService.getAll()
-          .then(anecdote => props.initializeAnecdotes(anecdote))
+        props.initializeAnecdotes()
     },[])
 
     return (

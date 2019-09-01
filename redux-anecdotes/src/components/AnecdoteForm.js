@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
+import { createMessage } from '../reducers/notificationReducer'
 
 import anecdoteService from '../services/anecdote'
+
 
 const AnecdoteForm =  (props) => {
     const addAnecdote = async (event) => {
@@ -10,8 +12,8 @@ const AnecdoteForm =  (props) => {
         const content = event.target.anecdote.value
         event.target.anecdote.value = ''
 
-        const newAnecdote = await anecdoteService.createNew(content)
-        props.createAnecdote(newAnecdote)
+        props.createAnecdote(content)
+        props.createMessage(`You have created a new anecdote, "${ content }"`, 3000)
     }
 
     return (
@@ -29,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createAnecdote: (value) => {
             return dispatch(createAnecdote(value))
+        },
+        createMessage: (value, time) => {
+            return dispatch(createMessage(value, time))
         }
     }
 }

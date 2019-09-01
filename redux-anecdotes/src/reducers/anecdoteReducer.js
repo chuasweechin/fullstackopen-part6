@@ -1,45 +1,65 @@
+import anecdoteService from '../services/anecdote'
+
 const anecdoteReducer = (state = [], action) => {
     switch(action.type) {
         case 'VOTE':
             const id = action.data.id
-            const anecdoteToChange = state.find(o => o.id === id)
+            const object = action.data.updatedObject
 
-            const changedAnecdote = {
-                ...anecdoteToChange,
-                votes: anecdoteToChange.votes + 1
-            }
-
-            return state.map(o => o.id === id ? changedAnecdote : o)
+            return state.map(o => o.id === id ? object : o)
 
         case 'INIT_ANACODOTE':
-            return action.data
+            return action.data.objects
 
         case 'NEW_ANACODOTE':
-            return state.concat(action.data)
+            return state.concat(action.data.newObject)
 
         default:
             return state
     }
 }
 
-export const initializeAnecdotes = (objects) => {
-    return {
-        type: 'INIT_ANACODOTE',
-        data: objects
+export const initializeAnecdotes = () => {
+    return async dispatch => {
+        const anecdotes = await anecdoteService.getAll()
+
+        dispatch({
+            type: 'INIT_ANACODOTE',
+            data: {
+                objects: anecdotes
+            }
+
+        })
     }
 }
 
-export const createAnecdote = (object) => {
-    return {
-        type: 'NEW_ANACODOTE',
-        data: object
+export const createAnecdote = (content) => {
+    return async dispatch => {
+        const newAnecdote = await anecdoteService.createNew(content)
+
+        dispatch({
+          type: 'NEW_ANACODOTE',
+          data: {
+            newObject: newAnecdote
+          }
+        })
     }
 }
 
-export const voteFor = (id) => {
-    return {
-        type: 'VOTE',
-        data: { id }
+export const voteFor = (id, selectedObject) => {
+    return async dispatch => {
+        const updatedAnecdote = await anecdoteService.update(id, {
+            ...selectedObject,
+            votes: selectedObject.votes + 1
+        })
+
+        dispatch({
+            type: 'VOTE',
+            data: {
+                id: id,
+                updatedObject: updatedAnecdote
+            }
+        })
     }
 }
 

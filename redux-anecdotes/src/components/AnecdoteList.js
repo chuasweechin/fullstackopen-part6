@@ -6,13 +6,11 @@ import { createMessage } from '../reducers/notificationReducer'
 import Anecdote from './Anecdote'
 
 const AnecdoteList = (props) => {
-    const vote = (id, content) => () => {
-        props.voteFor(id)
-        props.createMessage(`You voted for anecdote, "${ content }"`)
+    const vote = (id) => () => {
+        const anecdoteToChange = props.visibleAnecdotes.find(o => o.id === id)
+        props.voteFor(id, anecdoteToChange)
 
-        setTimeout(() => {
-            props.createMessage('')
-        }, 5000)
+        props.createMessage(`You voted for anecdote, "${ anecdoteToChange.content }"`, 3000)
     }
 
     return (
@@ -22,7 +20,7 @@ const AnecdoteList = (props) => {
                 <Anecdote
                     key={ anecdote.id }
                     anecdote={ anecdote }
-                    onClickHandler={ vote(anecdote.id, anecdote.content) }
+                    onClickHandler={ vote(anecdote.id) }
                 />
             )
         }
@@ -48,11 +46,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        voteFor: (value) => {
-            return dispatch(voteFor(value))
+        voteFor: (id, selectedObject) => {
+            return dispatch(voteFor(id, selectedObject))
         },
-        createMessage: (value) => {
-            return dispatch(createMessage(value))
+        createMessage: (value, time) => {
+            return dispatch(createMessage(value, time))
         }
     }
 }
