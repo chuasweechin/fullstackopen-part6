@@ -17,15 +17,15 @@ const AnecdoteList = (props) => {
 
     return (
         <div>
-            {
-                props.visibleAnecdotes.map(anecdote =>
-                    <Anecdote
-                        key={ anecdote.id }
-                        anecdote={ anecdote }
-                        onClickHandler={ vote(anecdote.id, anecdote.content) }
-                    />
-                )
-            }
+        {
+            props.visibleAnecdotes.map(anecdote =>
+                <Anecdote
+                    key={ anecdote.id }
+                    anecdote={ anecdote }
+                    onClickHandler={ vote(anecdote.id, anecdote.content) }
+                />
+            )
+        }
         </div>
     )
 }
