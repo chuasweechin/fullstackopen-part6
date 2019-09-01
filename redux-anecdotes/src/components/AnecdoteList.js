@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { voteFor } from '../reducers/anecdoteReducer'
-import { createMessage } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 import Anecdote from './Anecdote'
 
@@ -10,7 +10,7 @@ const AnecdoteList = (props) => {
         const anecdoteToChange = props.visibleAnecdotes.find(o => o.id === id)
         props.voteFor(id, anecdoteToChange)
 
-        props.createMessage(`You voted for anecdote, "${ anecdoteToChange.content }"`, 3000)
+        props.setNotification(`You voted for anecdote, "${ anecdoteToChange.content }"`, 3000)
     }
 
     return (
@@ -49,8 +49,8 @@ const mapDispatchToProps = (dispatch) => {
         voteFor: (id, selectedObject) => {
             return dispatch(voteFor(id, selectedObject))
         },
-        createMessage: (value, time) => {
-            return dispatch(createMessage(value, time))
+        setNotification: (value, time) => {
+            return dispatch(setNotification(value, time))
         }
     }
 }

@@ -8,7 +8,7 @@ const notificationReducer = (state = '', action) => {
     }
 }
 
-export const createMessage = (message, time) => {
+export const setNotification = (message, time) => {
     return async dispatch => {
         dispatch({
             type: 'ALERT',
